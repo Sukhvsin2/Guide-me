@@ -1,9 +1,9 @@
-import React, {useEffect} from 'react'
-// import { MapContainer, TileLayer} from "react-leaflet"
+import React, {useState, useEffect} from 'react'
 import "./Map.css"
 import SearchBar from './SearchBar'
 import * as L from "leaflet"
 import "leaflet-routing-machine";
+import SelectedElement from "./SelctedElement"
 
 function MapComponent() {
     // code working
@@ -28,10 +28,15 @@ function MapComponent() {
         }).addTo(mymap);
     }, [])
 
+    // Selected Item would be hidden till the selection
+    const [show, setShow] = useState(false);
+    const [showData, setShowData] = useState('')
+
     return (
         <div className="originalMap">
-            <SearchBar/>
+            <SearchBar setShow={setShow} setShowData={setShowData} />
             <div id="map"></div>
+            {show ? <SelectedElement showData={showData} setShow={setShow} /> : null}
         </div>
     )
 }
